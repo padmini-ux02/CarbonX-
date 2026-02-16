@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CarbonIQ - Feedback</title>
+  <style>
+    /* ----- General Styles ----- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #4ade80, #06b6d4);
+      color: #0f1724;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      color: #4ade80;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #0f1724;
+      text-decoration: underline;
+    }
+
+    /* ----- Card Styles ----- */
+    .card {
+      background: rgba(255,255,255,0.2);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    .feedback-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .feedback-header img {
+      width: 60px;
+      border-radius: 12px;
+      border: 2px solid #fff;
+      background: rgba(0,0,0,0.2);
+      padding: 4px;
+    }
+
+    .feedback-header h2 {
+      font-size: 24px;
+      color: #fff;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      resize: vertical;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      transition: 0.3s;
+    }
+
+    textarea:focus {
+      outline: 2px solid #4ade80;
+      background: rgba(255,255,255,0.25);
+    }
+
+    .btn {
+      cursor: pointer;
+      background: #fff;
+      color: #06b6d4;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #f0fdf4;
+      color: #0f1724;
+    }
+
+    .emoji-reactions {
+      display: flex;
+      gap: 12px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+
+    .emoji-reactions span {
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .emoji-reactions span:hover {
+      transform: scale(1.4);
+    }
+
+    .thankyou {
+      display: none;
+      text-align: center;
+      font-size: 18px;
+      color: #4ade80;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    @media(max-width:700px){
+      .feedback-header {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand"><div class="logo">CI</div><div><b>CarbonIQ</b></div></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="explanation.html">How It Works</a>
+        <a href="calculate.html">Calculator</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <div class="feedback-header">
+        <img src="https://cdn-icons-png.flaticon.com/512/2910/2910760.png" alt="Feedback Icon">
+        <h2>We Value Your Feedback</h2>
+      </div>
+
+      <form id="feedbackForm">
+        <label>Your Message
+          <textarea placeholder="Write your thoughts..." required></textarea>
+        </label>
+        <button class="btn" type="submit">Send Feedback</button>
+        <div class="thankyou" id="thankyou">🎉 Thanks for your feedback! 🎉</div>
+      </form>
+
+      <div class="emoji-reactions">
+        <span title="Love it!">😍</span>
+        <span title="Helpful">👍</span>
+        <span title="Neutral">😐</span>
+        <span title="Needs Improvement">👎</span>
+        <span title="Funny">😂</span>
+      </div>
+    </section>
+
+    <footer>© 2025 CarbonIQ | Built for environment</footer>
+  </div>
+
+  <script>
+    // Feedback form submission
+    document.getElementById('feedbackForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      document.getElementById('thankyou').style.display = 'block';
+      this.reset();
+    });
+
+    // Emoji reaction click
+    const emojis = document.querySelectorAll('.emoji-reactions span');
+    emojis.forEach(emoji => {
+      emoji.addEventListener('click', () => {
+        alert(`You reacted: ${emoji.textContent}`);
+      });
+    });
+  </script>
+</body>
+</html>
