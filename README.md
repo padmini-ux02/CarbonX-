@@ -1,4 +1,4 @@
-# CarbonIQ — Chatbot integration
+# CarbonX — Chatbot integration
 
 This workspace adds a simple AI assistant to the site. It uses a small Node.js Express proxy that forwards messages to OpenAI's Chat Completions API.
 
