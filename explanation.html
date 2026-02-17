@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CarbonIQ - How It Works</title>
+  <style>
+    /* ----- General Styles ----- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #4ade80, #06b6d4);
+      color: #0f1724;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: bold;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .logo {
+      width: 40px;
+      height: 40px;
+      background: #fff;
+      color: #4ade80;
+      font-weight: bold;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: #0f1724;
+      text-decoration: underline;
+    }
+
+    section.card {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin-bottom: 30px;
+    }
+
+    section.card h2 {
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    section.card p {
+      font-size: 16px;
+      color: #f0fdf4;
+      line-height: 1.5;
+    }
+
+    /* ----- Steps ----- */
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.15);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .step:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.25);
+    }
+
+    .step img {
+      width: 60px;
+      border-radius: 12px;
+      border: 2px solid #fff;
+      background: rgba(0,0,0,0.2);
+      padding: 4px;
+    }
+
+    .step-content h3 {
+      margin: 0 0 6px 0;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .step-content p, .step-content li {
+      margin: 4px 0;
+      font-size: 15px;
+      color: #f0fdf4;
+      line-height: 1.5;
+    }
+
+    .step-content ul {
+      padding-left: 20px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    @media(max-width: 700px){
+      .step {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .step-content ul {
+        padding-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand"><div class="logo">CI</div><div><b>CarbonIQ</b></div></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="explanation.html">How It Works</a>
+        <a href="calculate.html">Calculator</a>
+        <a href="feedback.html">Feedback</a>
+      </nav>
+    </header>
+
+    <section class="card">
+      <h2>🌍 The Science Behind Our Calculator</h2>
+      <p>A carbon footprint is the total greenhouse gas emissions caused by your daily activities. Our calculator estimates your footprint based on main factors like Travel, Electricity, and Diet. It converts your inputs into CO₂ equivalent values, showing how much impact you have on the planet.</p>
+    </section>
+
+    <!-- Step 1: Car Travel -->
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/743/743131.png" alt="Car Travel Icon">
+      <div class="step-content">
+        <h3>🚗 Step 1: Travel Emissions</h3>
+        <p>When you travel by car, bus, or flight, fuel burning releases CO₂. We estimate emissions as:</p>
+        <p><b>CO₂ from Car = Distance (km/day) × 0.12 kg × 365 days</b></p>
+        <p>(0.12 kg CO₂ per km for an average petrol car)</p>
+      </div>
+    </div>
+
+    <!-- Step 2: Electricity -->
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/2910/2910768.png" alt="Electricity Icon">
+      <div class="step-content">
+        <h3>💡 Step 2: Electricity Usage</h3>
+        <p>Electricity generation often comes from coal, gas, or oil. We calculate:</p>
+        <p><b>CO₂ from Electricity = Monthly kWh × 0.92 kg × 12</b></p>
+        <p>(0.92 kg CO₂ per kWh is a global average)</p>
+      </div>
+    </div>
+
+    <!-- Step 3: Total -->
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/2891/2891735.png" alt="Total Icon">
+      <div class="step-content">
+        <h3>📊 Step 3: Total Annual Footprint</h3>
+        <p>Finally, we add all emissions together:</p>
+        <p><b>Total CO₂ = Travel + Electricity + Food</b></p>
+        <p>This gives your estimated annual carbon footprint in kg of CO₂ per year.</p>
+      </div>
+    </div>
+
+    <!-- Step 4: Solutions -->
+    <div class="step">
+      <img src="https://cdn-icons-png.flaticon.com/512/427/427735.png" alt="Solutions Icon">
+      <div class="step-content">
+        <h3>🌱 Step 4: Suggestions</h3>
+        <p>Based on your result, the calculator suggests ways to reduce emissions:</p>
+        <ul>
+          <li>🚴 Use public transport or cycle more</li>
+          <li>💡 Switch to renewable energy</li>
+          <li>🌳 Plant trees to offset emissions</li>
+        </ul>
+      </div>
+    </div>
+
+    <footer>© 2025 CarbonIQ | Built for environment</footer>
+  </div>
+</body>
+</html>
