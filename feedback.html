@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarbonX - Feedback</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+<style>
+
+/* Star Rating */
+.stars {
+  display: flex;
+  gap: 10px;
+  font-size: 30px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.stars span {
+  transition: 0.3s;
+}
+
+.stars span:hover,
+.stars span.active {
+  color: gold;
+  transform: scale(1.2);
+}
+
+/* Emoji Rating */
+.emoji-rating {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  font-size: 35px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.emoji-rating span {
+  transition: 0.3s;
+}
+
+.emoji-rating span:hover,
+.emoji-rating span.selected {
+  transform: scale(1.3);
+}
+
+.success-message {
+  margin-top: 15px;
+  color: #00ffae;
+  font-weight: 600;
+  display: none;
+}
+
+</style>
+
+</head>
+
+<body>
+<div class="container">
+
+<!-- ===== HEADER ===== -->
+<header>
+  <div class="brand">
+    <div class="logo">CI</div>
+    <div>CarbonX</div>
+  </div>
+
+  <nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="explanation.html">How It Works</a>
+  <a href="calculate.html">Calculator</a>
+  <a href="history.html">History</a>
+  <a href="feedback.html">Feedback</a>
+</nav>
+</header>
+
+
+<!-- ===== FEEDBACK SECTION ===== -->
+<section class="card center">
+
+<h1>We Value Your Feedback</h1>
+
+<p>
+Your opinion helps us improve CarbonIQ and build a better
+climate intelligence platform.
+</p>
+
+<br>
+
+<form id="feedbackForm">
+
+<label>Your Name</label>
+<input type="text" placeholder="Enter your name" required>
+
+<br><br>
+
+<label>Rate Your Experience</label>
+
+<div class="stars" id="starRating">
+  <span data-value="1">★</span>
+  <span data-value="2">★</span>
+  <span data-value="3">★</span>
+  <span data-value="4">★</span>
+  <span data-value="5">★</span>
+</div>
+
+<br>
+
+<label>How did you feel using CarbonX?</label>
+
+<div class="emoji-rating" id="emojiRating">
+  <span>😡</span>
+  <span>😐</span>
+  <span>🙂</span>
+  <span>😃</span>
+  <span>🤩</span>
+</div>
+
+<br><br>
+
+<label>Your Suggestions</label>
+<textarea placeholder="Share your thoughts..." required></textarea>
+
+<br>
+
+<button class="btn" type="submit">Submit Feedback</button>
+
+<div class="success-message" id="successMessage">
+🎉 Thank you for your feedback!
+</div>
+
+</form>
+
+</section>
+
+
+<!-- ===== FOOTER ===== -->
+<footer>
+© 2026 CarbonX | Climate Intelligence Platform
+</footer>
+
+</div>
+
+<script>
+
+// Star Rating Logic
+const stars = document.querySelectorAll('#starRating span');
+stars.forEach(star => {
+  star.addEventListener('click', () => {
+    stars.forEach(s => s.classList.remove('active'));
+    for(let i = 0; i < star.dataset.value; i++){
+      stars[i].classList.add('active');
+    }
+  });
+});
+
+// Emoji Selection
+const emojis = document.querySelectorAll('#emojiRating span');
+emojis.forEach(emoji => {
+  emoji.addEventListener('click', () => {
+    emojis.forEach(e => e.classList.remove('selected'));
+    emoji.classList.add('selected');
+  });
+});
+
+// Form Submission
+document.getElementById('feedbackForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  document.getElementById('successMessage').style.display = 'block';
+  this.reset();
+  stars.forEach(s => s.classList.remove('active'));
+  emojis.forEach(e => e.classList.remove('selected'));
+});
+
+</script>
+
+</body>
+</html>

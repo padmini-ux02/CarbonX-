@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarbonIQ - Calculator</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+  linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)),
+  url('https://images.unsplash.com/photo-1508780709619-79562169bc64');
+  background-size:cover;
+  background-position:center;
+  color:#fff;
+}
+
+.navbar{
+  width:100%;
+  padding:15px 0;
+  text-align:center;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(10px);
+}
+
+.navbar a{
+  color:#ffffff;
+  text-decoration:none;
+  margin:0 20px;
+  font-weight:500;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:30px;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  margin-bottom:30px;
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.input-group{
+  margin-bottom:20px;
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin-top:5px;
+  border-radius:10px;
+  border:none;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+
+.btn{
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:30px;
+  background:linear-gradient(135deg,#00ffae,#00c3ff);
+  color:#000;
+  font-weight:600;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+#resultArea{
+  margin-top:20px;
+  font-size:20px;
+  text-align:center;
+  color:#00ffae;
+  font-weight:600;
+}
+
+/* Medium Pie Chart */
+#myChart{
+  max-width:450px;
+  max-height:450px;
+  margin:30px auto;
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="explanation.html">How It Works</a>
+  <a href="calculate.html">Calculator</a>
+  <a href="history.html">History</a>
+  <a href="feedback.html">Feedback</a>
+</nav>
+
+<div class="container">
+<section class="card">
+
+<h1>Carbon Footprint Calculator</h1>
+
+<div class="input-group">
+<label>Electricity (kWh/month)
+<input id="elec" type="number" value="250">
+</label>
+</div>
+
+<div class="input-group">
+<label>Transport Distance (km/month)
+<input id="carKm" type="number" value="150">
+</label>
+</div>
+
+<div class="input-group">
+<label>Fuel Efficiency (km/litre)
+<input id="carEff" type="number" value="15">
+</label>
+</div>
+
+<div class="input-group">
+<label>Flights (hrs/month)
+<input id="flights" type="number" value="3">
+</label>
+</div>
+
+<div class="input-group">
+<label>Water Usage (liters/day)
+<input id="water" type="number" value="150">
+</label>
+</div>
+
+<div class="input-group">
+<label>Screen Usage (hours/day)
+<input id="screenTime" type="number" value="1">
+</label>
+</div>
+
+<div class="input-group">
+<label>Diet
+<select id="diet">
+<option value="2.5">Meat-heavy</option>
+<option value="1.8" selected>Average</option>
+<option value="1.2">Vegetarian</option>
+</select>
+</label>
+</div>
+
+<button class="btn" onclick="calculate()">Calculate</button>
+
+<div id="resultArea">Your result will appear here</div>
+
+<canvas id="myChart"></canvas>
+
+</section>
+</div>
+
+<script>
+let myChart;
+
+function calculate(){
+
+  const elec = +document.getElementById('elec').value || 0;
+  const carKm = +document.getElementById('carKm').value || 0;
+  const carEff = +document.getElementById('carEff').value || 1;
+  const flights = +document.getElementById('flights').value || 0;
+  const water = +document.getElementById('water').value || 0;
+  const screenTime = +document.getElementById('screenTime').value || 0;
+  const diet = +document.getElementById('diet').value || 1.8;
+
+  const electricityFactor = 0.475;
+  const petrolFactor = 2.31;
+  const flightFactor = 90;
+  const waterFactor = 0.0003;
+  const screenFactor = 0.05;
+
+  const elecAnnual = elec * 12 * electricityFactor;
+  const carEmission = (carKm * 12 / Math.max(carEff,0.1)) * petrolFactor;
+  const flightEmission = flights * 12 * flightFactor;
+  const waterEmission = water * 365 * waterFactor;
+  const screenEmission = screenTime * 365 * screenFactor;
+  const dietEmission = 2000 * diet;
+
+  const total = Math.round(
+    elecAnnual +
+    carEmission +
+    flightEmission +
+    waterEmission +
+    screenEmission +
+    dietEmission
+  );
+
+  document.getElementById("resultArea").innerHTML =
+  "Estimated Annual Emission:<br><br>" +
+  total.toLocaleString() + " kg CO₂e / year";
+
+  saveHistory(total);
+
+  updateChart(elecAnnual, carEmission, flightEmission, waterEmission, screenEmission, dietEmission);
+}
+
+function updateChart(e,c,f,w,s,d){
+
+  const ctx = document.getElementById('myChart');
+
+  if(myChart){
+    myChart.destroy();
+  }
+
+  myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: ['Electricity','Car Travel','Flights','Water','Screen','Diet'],
+      datasets: [{
+        data: [e,c,f,w,s,d],
+        backgroundColor: [
+          '#00c3ff',
+          '#ff9800',
+          '#ff5f6d',
+          '#4caf50',
+          '#2196f3',
+          '#9c27b0'
+        ]
+      }]
+    },
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{ labels:{ color:'#fff' } }
+      }
+    }
+  });
+}
+
+function saveHistory(total){
+
+  let history = JSON.parse(localStorage.getItem("carbonHistory")) || [];
+
+  const now = new Date();
+
+  const record = {
+    full: now.toLocaleString(),
+    value: total
+  };
+
+  history.unshift(record);
+
+  if(history.length > 10){
+    history.pop();
+  }
+
+  localStorage.setItem("carbonHistory", JSON.stringify(history));
+}
+</script>
+
+</body>
+</html>

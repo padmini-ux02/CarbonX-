@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarbonIQ - History</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+  linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.85)),
+  url('https://images.unsplash.com/photo-1508780709619-79562169bc64');
+  background-size:cover;
+  background-position:center;
+  color:#fff;
+}
+
+.navbar{
+  width:100%;
+  padding:15px 0;
+  text-align:center;
+  background:rgba(0,0,0,0.4);
+}
+
+.navbar a{
+  color:#fff;
+  text-decoration:none;
+  margin:0 20px;
+}
+
+.container{
+  max-width:800px;
+  margin:auto;
+  padding:40px 20px;
+}
+
+.card{
+  background:rgba(255,255,255,0.08);
+  backdrop-filter:blur(15px);
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  border-radius:10px;
+  border:none;
+  margin-bottom:20px;
+  background:rgba(255,255,255,0.15);
+  color:#fff;
+}
+
+.history-item{
+  background:rgba(255,255,255,0.08);
+  padding:15px;
+  margin-bottom:15px;
+  border-radius:12px;
+}
+
+.history-date{
+  color:#00ffae;
+  font-weight:600;
+}
+
+.empty{
+  text-align:center;
+  color:#ccc;
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+  <a href="index.html">Home</a>
+  <a href="explanation.html">How It Works</a>
+  <a href="calculate.html">Calculator</a>
+  <a href="history.html">History</a>
+  <a href="feedback.html">Feedback</a>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <h1>Calculation History</h1>
+
+    <input type="text" id="searchInput" placeholder="Search by date or time..." onkeyup="filterHistory()">
+
+    <div id="historyList"></div>
+
+  </div>
+</div>
+
+<script>
+
+let historyData = [];
+
+function loadHistory(){
+
+  historyData = JSON.parse(localStorage.getItem("carbonHistory")) || [];
+  displayHistory(historyData);
+}
+
+function displayHistory(data){
+
+  const historyList = document.getElementById("historyList");
+
+  if(data.length === 0){
+    historyList.innerHTML = "<div class='empty'>No matching records found.</div>";
+    return;
+  }
+
+  historyList.innerHTML = data.map(item =>
+    `<div class="history-item">
+        <div class="history-date">📅 ${item.full}</div>
+        🌍 <strong>${item.value.toLocaleString()} kg CO₂e / Month</strong>
+     </div>`
+  ).join("");
+}
+
+function filterHistory(){
+
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+
+  const filtered = historyData.filter(item =>
+    item.full.toLowerCase().includes(keyword)
+  );
+
+  displayHistory(filtered);
+}
+
+window.onload = loadHistory;
+
+</script>
+
+</body>
+</html>
